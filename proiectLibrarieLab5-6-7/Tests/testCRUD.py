@@ -1,5 +1,5 @@
 from Domain.carte import getId, getTitlu, getGen, getPret, getReducere
-from Logic.CRUD import adaugaCarte, getById, stergeCarte
+from Logic.CRUD import adaugaCarte, getById, stergeCarte, modificaCarte
 
 
 def testAdaugaCarte():
@@ -27,4 +27,19 @@ def testStergeCarte():
     lista = stergeCarte("3", lista)
     assert len(lista) == 1
     assert getById("2", lista) is not None
+
+
+def testModificaCarte():
+    lista = []
+    lista = adaugaCarte("1", "Atomic Habits", "disciplina", 50, "none", lista)
+    lista = adaugaCarte("2", "Liderii mananca ultimii", "business", 150, "gold", lista)
+
+    lista = modificaCarte("2", "Liderii mananca ultimii", "self development", 100, "silver", lista)
+    lista = modificaCarte("1", "Atomic Habits", "self development", 75, "silver", lista)
+
+    assert len(lista) == 2
+    assert getGen(getById("1", lista)) == "self development"
+    assert getPret(getById("1", lista)) == 75
+    assert getGen(getById("2", lista)) == "self development"
+    assert getReducere(getById("2", lista)) == "silver"
 
