@@ -24,9 +24,6 @@ def testStergeCarte():
     assert getById("1", lista) is None
     assert getById("2", lista) is not None
 
-    lista = stergeCarte("3", lista)
-    assert len(lista) == 1
-    assert getById("2", lista) is not None
 
 
 def testModificaCarte():

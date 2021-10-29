@@ -1,6 +1,7 @@
 from Tests.testCRUD import testAdaugaCarte, testStergeCarte, testModificaCarte
 from Tests.testDomain import testCarte
-from Tests.testFunctionalitati import testReducereClient, testModificareGenDupaTitluDat
+from Tests.testFunctionalitati import testReducereClient, testModificareGenDupaTitluDat, testPretMinimPerGen, \
+    testOrdonareDupaPret, testTitluriDistinctePerGen
 
 
 def runAllTests():
@@ -10,3 +11,6 @@ def runAllTests():
     testReducereClient()
     testModificareGenDupaTitluDat()
     testModificaCarte()
+    testPretMinimPerGen()
+    testOrdonareDupaPret()
+    testTitluriDistinctePerGen()

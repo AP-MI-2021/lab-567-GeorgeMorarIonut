@@ -8,67 +8,65 @@ def creeazaVanzareCarte(id, titlu, gen, pret, reducere):
     :param tipReducere: string
     :return:
     """
-    lista = []
-
-    lista.append(id)
-    lista.append(titlu)
-    lista.append(gen)
-    lista.append(pret)
-    lista.append(reducere)
-
-    return lista
+    return {
+        "id": id,
+        "titlu": titlu,
+        "gen": gen,
+        "pret": pret,
+        "reducere": reducere
+    }
 
 
-def getId(lista):
+def getId(carte):
     """
     Ia id-ul unei carti.
     :param carte: dictionar ce retine o carte
     :return: id-ul cartii
     """
-    return lista[0]
+    return carte["id"]
 
 
-def getTitlu(lista):
+def getTitlu(carte):
     """
     Ia titlul unei carti.
-    :param lista: dictionar ce retine o carte
+    :param carte: dictionar ce retine o carte
     :return: titlul cartii
     """
-    return lista[1]
+    return carte["titlu"]
 
 
-def getGen(lista):
+def getGen(carte):
     """
     Ia genul unei carti.
-    :param lista:  dictionar ce retine o carte
+    :param carte:  dictionar ce retine o carte
     :return:  genul cartii
     """
-    return lista[2]
+    return carte["gen"]
 
 
-def getPret(lista):
+def getPret(carte):
     """
     Ia pretul unei carti.
-    :param lista: dictionar ce retine o carte
+    :param carte: dictionar ce retine o carte
     :return: pretul cartii
     """
-    return lista[3]
+    return carte["pret"]
 
 
-def getReducere(lista):
+def getReducere(carte):
     """
     Ia reducerea unei carti.
-    :param lista: dictionar ce retine o carte
+    :param carte: dictionar ce retine o carte
     :return: reducerea clientului
     """
-    return lista[4]
+    return carte["reducere"]
 
 
-def toString(lista):
+def toString(carte):
     return "Id: {}, Titlu: {}, Gen: {}, Pret: {}, Reducere: {}".format(
-        lista[0],
-        lista[1],
-        lista[2],
-        lista[3],
-        lista[4]
+        getId(carte),
+        getTitlu(carte),
+        getGen(carte),
+        getPret(carte),
+        getReducere(carte)
     )
