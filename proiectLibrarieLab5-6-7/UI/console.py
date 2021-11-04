@@ -1,5 +1,5 @@
-from Domain.carte import toString
-from Logic.CRUD import adaugaCarte, stergeCarte, modificaCarte
+from Domain.carte import toString, getId, getTitlu, getGen, getPret, getReducere
+from Logic.CRUD import adaugaCarte, stergeCarte, modificaCarte, getById
 from Logic.functionalitati import reducereClient, modificareGenDupaTitluDat, pretMinimPerGen, ordonareDupaPret, \
     titluriDistinctePerGen
 
@@ -13,11 +13,12 @@ def printMenu():
     print("6. Determina pretul minim pentru fiecare gen")
     print("7. Ordoneaza crescator cartile in functie de pret")
     print("8. Afiseaza numarul de titluri distincte pentru fiecare gen")
+    print("u. Undo")
     print("a. Afiseaza carti")
     print("x. Iesire")
 
 
-def uiAdaugaCarte(lista):
+def uiAdaugaCarte(lista, undoOperations):
     try:
         id = input("Dati id: ")
         titlu = input("Dati titlu: ")
@@ -25,23 +26,35 @@ def uiAdaugaCarte(lista):
         pret = float(input("Dati pretul: "))
         reducere = input("Dati reducere: ")
 
-        return adaugaCarte(id, titlu, gen, pret, reducere, lista)
+        rezultat = adaugaCarte(id, titlu, gen, pret, reducere, lista)
+        undoOperations.append(lambda: stergeCarte(id, rezultat))
+        return rezultat
     except ValueError as ve:
         print(f'Error: {ve}')
         return lista
 
 
-def uiStergeCarte(lista):
+def uiStergeCarte(lista, undoOperations):
     try:
         id = input("Dati id-ul cartii care va fi stearsa: ")
 
-        return stergeCarte(id, lista)
+        rezultat = stergeCarte(id, lista)
+        prajituraSters = getById(id, lista)
+        undoOperations.append(lambda: adaugaCarte(
+            getId(prajituraSters),
+            getTitlu(prajituraSters),
+            getGen(prajituraSters),
+            getPret(prajituraSters),
+            getReducere(prajituraSters),
+            rezultat
+        ))
+        return rezultat
     except ValueError as ve:
         print("Eroare: Id-ul nu exista!")
         return lista
 
 
-def uiModificaCarte(lista):
+def uiModificaCarte(lista, undoOperations):
     try:
         id = input("Dati id-ul cartii de modificat: ")
         titlu = input("Dati noul titlu al cartii: ")
@@ -49,7 +62,17 @@ def uiModificaCarte(lista):
         pret = float(input("Dati noul pret al cartii: "))
         reducere = input("Dati noua reducere a cartii: ")
 
-        return modificaCarte(id, titlu, gen, pret, reducere, lista)
+        rezultat = modificaCarte(id, titlu, gen, pret, reducere, lista)
+        prajituraInainteDeMod = getById(id, lista)
+        undoOperations.append(lambda: modificaCarte(
+            getId(prajituraInainteDeMod),
+            getTitlu(prajituraInainteDeMod),
+            getGen(prajituraInainteDeMod),
+            getPret(prajituraInainteDeMod),
+            getReducere(prajituraInainteDeMod),
+            rezultat
+        ))
+        return rezultat
     except ValueError as ve:
         print(f'Error: {ve}')
 
@@ -59,15 +82,23 @@ def showAll(lista):
         print(toString(carte))
 
 
-def uiReducereClient(lista):
-    return reducereClient(lista)
+def returnList(lista):
+    return lista
 
 
-def uiModificaDupaPret(lista):
+def uiReducereClient(lista, undoOperations):
+    rezultat = reducereClient(lista)
+    undoOperations.append(lambda: returnList(lista))
+    return rezultat
+
+
+def uiModificaDupaPret(lista, undoOperations):
     titlulDat = input("Titlul dat: ")
     genulNou = input("Dati genul nou pe care vreti sa-l aiba cartea: ")
 
-    return modificareGenDupaTitluDat(titlulDat, genulNou, lista)
+    rezultat = modificareGenDupaTitluDat(titlulDat, genulNou, lista)
+    undoOperations.append(lambda: returnList(lista))
+    return rezultat
 
 
 def uiDeterminaPretMinimPerGen(lista):
@@ -89,26 +120,32 @@ def uiTitluriDistinctePerGen(lista):
 
 
 def runMenu(lista):
+    undoOperations = []
     while True:
         printMenu()
         optiune = input("Dati optiune: ")
 
         if optiune == "1":
-            lista = uiAdaugaCarte(lista)
+            lista = uiAdaugaCarte(lista, undoOperations)
         elif optiune == "2":
-            lista = uiStergeCarte(lista)
+            lista = uiStergeCarte(lista, undoOperations)
         elif optiune == "3":
-            lista = uiModificaCarte(lista)
+            lista = uiModificaCarte(lista, undoOperations)
         elif optiune == "4":
-            lista = uiReducereClient(lista)
+            lista = uiReducereClient(lista, undoOperations)
         elif optiune == "5":
-            lista = uiModificaDupaPret(lista)
+            lista = uiModificaDupaPret(lista, undoOperations)
         elif optiune == "6":
             uiDeterminaPretMinimPerGen(lista)
         elif optiune == "7":
             uiOrdonareDupaPret(lista)
         elif optiune == "8":
             uiTitluriDistinctePerGen(lista)
+        elif optiune == "u":
+            if len(undoOperations) > 0:
+                lista = undoOperations.pop()()
+            else:
+                print("Nu se poate face undo!")
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":
