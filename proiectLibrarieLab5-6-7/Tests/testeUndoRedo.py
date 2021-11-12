@@ -37,35 +37,47 @@ def testUndoRedo():
 
 
     # primul undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista)is not None
+    assert getById("3", lista) is None
 
 
     # al doilea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 1
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
 
 
     # al treilea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 0
-    assert getId(getById("1", lista)) is None
+    assert getById("1", lista) is None
 
     # al patrulea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 0
 
     # a patra adaugare
@@ -94,91 +106,124 @@ def testUndoRedo():
     assert len(lista) == 3
 
     # primul redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 3
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is not None
+    assert getById("3", lista) is not None
 
 
     # al cincelea si al saselea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 1
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
 
 
     # al doilea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is not None
+    assert getById("3", lista)is None
 
     # al treilea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 3
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is not None
+    assert getById("3", lista) is not None
 
 
     # al saptelea si al optulea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 1
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
 
 
     # al patrulea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is not None
+    assert getById("3", lista) is None
 
 
     # al cincelea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 3
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is not None
-    assert getId(getById("3", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is not None
+    assert getById("3", lista) is not None
 
 
     # noualea si al zecelea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 1
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
 
 
     # a saptea adaugare
@@ -192,56 +237,74 @@ def testUndoRedo():
 
 
     # al saselea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
-    assert getId(getById("4", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
+    assert getById("4", lista) is not None
 
 
     # al unsprezecelea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 1
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
-    assert getId(getById("4", lista)) is None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
+    assert getById("4", lista) is None
 
     # al doisprezecelea undo
-    operations = undoOperations.pop()
-    redoOperations.append(operations)
-    lista = operations[0]()
+    if len(undoOperations) > 0:
+        operations = undoOperations.pop()
+        redoOperations.append(operations)
+        lista = operations[0]()
+    else:
+        pass
     assert len(lista) == 0
-    assert getId(getById("1", lista)) is None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
-    assert getId(getById("4", lista)) is None
+    assert getById("1", lista) is None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
+    assert getById("4", lista) is None
 
 
     # al saptelea si al optulea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
-    assert getId(getById("4", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
+    assert getById("4", lista) is not None
 
     # al noualea redo
-    operations = redoOperations.pop()
-    undoOperations.append(operations)
-    lista = operations[1]()
+    if len(redoOperations) > 0:
+        operations = redoOperations.pop()
+        undoOperations.append(operations)
+        lista = operations[1]()
+    else:
+        pass
     assert len(lista) == 2
-    assert getId(getById("1", lista)) is not None
-    assert getId(getById("2", lista)) is None
-    assert getId(getById("3", lista)) is None
-    assert getId(getById("4", lista)) is not None
+    assert getById("1", lista) is not None
+    assert getById("2", lista) is None
+    assert getById("3", lista) is None
+    assert getById("4", lista) is not None
